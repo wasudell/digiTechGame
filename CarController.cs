@@ -7,9 +7,11 @@ public class CarController : MonoBehaviour
 {   
     public float horizontalInput;
     public float verticalInput;
-    private bool isBraking;
+    public bool isBraking;
     private float steeringAngle;
     private float brakeForce;
+    public Vector3 comAdjust;
+    public Quaternion vanRotation;
 
     public float motorPower = 10000f;
     public float maxSteeringAngle = 35f;
@@ -30,6 +32,11 @@ public class CarController : MonoBehaviour
     public Transform BRWheelTransform;
     public Transform BLWheelTransform;
 
+    private void Start()
+    {
+        // declaring centre of mass so it can be adjsuted
+        carRigidbody = GetComponent<Rigidbody>();
+    }
     private void FixedUpdate()
     {
         GetInput();
@@ -39,6 +46,11 @@ public class CarController : MonoBehaviour
     }
     private void GetInput()
     {
+        // declaring rotation for the cannon
+        vanRotation = transform.rotation;
+        // adjusting centre of mass
+        carRigidbody.centerOfMass = comAdjust;
+        carRigidbody.WakeUp();
         // getting input of forward, backward, left and right (W, A, S, D)
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
@@ -66,7 +78,7 @@ public class CarController : MonoBehaviour
         carZRot = Mathf.Rad2Deg * carZRotRad;
         // finding if the car is flipped and if the flipped key is pressed
         bool flipCar = Input.GetKey(KeyCode.F);
-        if ((carXRot > 175 & carXRot < 185) & flipCar == true){
+        if (((carXRot > 175 & carXRot < 185) || carZRot > 65 || carZRot < -65) & flipCar == true){
             if (carZRot > 65){  // on its left side
             wholeCar.transform.position = Vector3.Lerp(wholeCar.transform.position, wholeCar.TransformPoint(1, 0, 0), 1);
             wholeCar.transform.rotation = Quaternion.Lerp(wholeCar.transform.rotation, new Quaternion(0, 0, 0, 1), 1);
@@ -87,6 +99,8 @@ public class CarController : MonoBehaviour
     }
     private void handleMotor()
     {
+        FRWheelCollider.motorTorque = verticalInput * motorPower;
+        FLWheelCollider.motorTorque = verticalInput * motorPower;
         BRWheelCollider.motorTorque = verticalInput * motorPower;
         BLWheelCollider.motorTorque = verticalInput * motorPower;
 
@@ -100,7 +114,7 @@ public class CarController : MonoBehaviour
     {
         steeringAngle = maxSteeringAngle * horizontalInput;
         FRWheelCollider.steerAngle = steeringAngle;
-        FLWheelCollider.steerAngle =steeringAngle;
+        FLWheelCollider.steerAngle = steeringAngle;
     }
     private void UpdateWheels()
     {
