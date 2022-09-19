@@ -19,10 +19,15 @@ public class CarController : MonoBehaviour
     public float carXRot;
     public float carZRot;
 
+    public GameObject bodyGameObject;
+    public GameObject cannonGameObject;
+    public GameObject wheelGameObjects;
     public Rigidbody carRigidbody;
     public Transform car;
     public Transform wholeCar;
     public float carVelocity;
+    public float impulse;
+    public float health = 100;
     public WheelCollider FRWheelCollider;
     public WheelCollider FLWheelCollider;
     public WheelCollider BRWheelCollider;
@@ -32,10 +37,15 @@ public class CarController : MonoBehaviour
     public Transform BRWheelTransform;
     public Transform BLWheelTransform;
 
+    public ParticleSystem explosion;
+    private bool deathCheck;
+
     private void Start()
     {
         // declaring centre of mass so it can be adjsuted
         carRigidbody = GetComponent<Rigidbody>();
+        // resetting the deathCheck cause van is alive at start
+        deathCheck = false;
     }
     private void FixedUpdate()
     {
@@ -96,6 +106,12 @@ public class CarController : MonoBehaviour
             }
             return;
         }
+        // exploding the car if health is equal to or less than 0
+        if (health <= 0 && deathCheck == false){
+            Explode();
+            // making sure the explode script only runs once
+            deathCheck = true;
+        }
     }
     private void handleMotor()
     {
@@ -130,5 +146,23 @@ public class CarController : MonoBehaviour
         wheelCollider.GetWorldPose(out pos, out rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
+    }
+
+    void OnCollisionEnter(Collision crash){
+        // getting impulse of collision (change in momentum)
+        impulse = Mathf.Abs(crash.impulse.x) + Mathf.Abs(crash.impulse.y) + Mathf.Abs(crash.impulse.z);
+        // minusing impulse from health (divided by 10000 as impulse is a big number)
+        health = health - impulse / 10000;
+    }
+
+    private void Explode(){
+        // creating the explosion
+        Instantiate(explosion, transform);
+        // telling the explosion particle system to play
+        explosion.Play();
+        // making the van disappear
+        Destroy(bodyGameObject, 0f);
+        Destroy(cannonGameObject, 0f);
+        Destroy(wheelGameObjects, 0f);
     }
 }
