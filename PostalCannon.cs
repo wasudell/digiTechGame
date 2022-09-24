@@ -6,17 +6,24 @@ public class PostalCannon : MonoBehaviour
 {
     // script to get rotation of van
     public CarController van;
+    public GameObject previousHouse;
     // array of all addresses
     public string[] addresses = System.IO.File.ReadAllLines(@"Assets/Addresses.txt");
     public string addrName;
     public GameObject house;
+    // getting values for cannon rotation speed and distance
     public float distance;
     public float rotationSpeed;
+    
+    // package firing
+    public GameObject package;
+    public float packageSpeed;
+
     
     void Start()
     {
         // choosing a random number, grabbing that number from the array,
-        //  and tying it to the right game object at the start of the game
+        // and tying it to the right game object at the start of the game
         int addrNum = Random.Range(0, addresses.Length);
             addrName = addresses[addrNum];
             house = GameObject.Find(addrName);
@@ -34,12 +41,16 @@ public class PostalCannon : MonoBehaviour
 
     void FindHouse()
     {
-        // finding house when space pressed (when package fires), doing same thing as when Start() is called
-        if (Input.GetButtonDown("Jump")){
+        if (Input.GetButtonDown("Jump")){ // only allows the button to be pressed against once the button has been released first (so not "pressed" over multiple frames)
+        // Jump bound to space key
+            // stating the previous house so that the package knows if it hit the right house
+            previousHouse = house;
+            // finding house when space pressed (when package fires), doing same thing as when Start() is called
             int addrNum = Random.Range(0, addresses.Length);
             addrName = addresses[addrNum];
             house = GameObject.Find(addrName);
-
+            // firing package
+            SpawnPackage();
         }
     }
 
@@ -64,5 +75,10 @@ public class PostalCannon : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, resetRotation, rotationSpeed * Time.deltaTime);
         }
         
+    }
+
+    void SpawnPackage(){
+        GameObject newPackage = Instantiate(package, transform.position, Quaternion.identity);
+        newPackage.GetComponent<Rigidbody>().velocity = -(transform.up) * packageSpeed;
     }
 }

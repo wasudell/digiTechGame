@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    public CarController van;
     public Vector3 offset;
     public Transform target;
     public float translateSpeed;
@@ -11,8 +12,11 @@ public class CameraFollow : MonoBehaviour
     
     void FixedUpdate()
     {
-        HandleTranslation();
-        HandleRotation();
+        // only move if van still exits (van gets removed when falling below 0 health)
+        if (van.health > 0){
+            HandleTranslation();
+            HandleRotation();
+        }
     }
 
     void HandleTranslation()
