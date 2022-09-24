@@ -61,6 +61,7 @@ public class CarController : MonoBehaviour
         // this simplifies things as compared to adding two sources on the van
         collisionSound = bodyGameObject.GetComponent<AudioSource>();
         // resetting the deathCheck cause van is alive at start
+        StartCoroutine(Silence()); // mutes audio for first second so collision audio doesn't play
         deathCheck = false;
     }
     private void FixedUpdate()
@@ -214,5 +215,11 @@ public class CarController : MonoBehaviour
     IEnumerator EndScreenWait(){ // telling the end screen to show after a few seconds so it doesn't appear immediately
         yield return new WaitForSeconds(3);
         endScreen = true; // indicates to Score.cs script to show the end screen
+    }
+
+    IEnumerator Silence(){ // see line 64
+        AudioListener.pause = true;
+        yield return new WaitForSeconds(1);
+        AudioListener.pause = false;
     }
 }
