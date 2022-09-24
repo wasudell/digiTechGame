@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class UIDistance : MonoBehaviour
 {
-    public PostalCannon script;
-    public float roundedDist;
-    public Text txt;
+    public PostalCannon script; // script with the distance to house
+    public float roundedDist; // integer that rounds that distance
+    public Text txt; // text to be edited
 
     void Update()
     {
-        roundedDist = Mathf.Round(script.distance);
-        txt.text = roundedDist + "m away";
+        roundedDist = Mathf.Round(script.distance); // rounding the distance to the house
+        txt.text = roundedDist + "m away"; // displaying that rounded distance in a text box
     }
 }

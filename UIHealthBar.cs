@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class UIHealthBar : MonoBehaviour
 {
-    public CarController van;
-    public Image healthBar;
+    public CarController van; // script with health of van
+    public Image healthBar; // image representing health of van as a percentage
 
     void FixedUpdate()
     {

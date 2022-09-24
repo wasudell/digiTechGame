@@ -6,18 +6,18 @@ public class PostalCannon : MonoBehaviour
 {
     // script to get rotation of van
     public CarController van;
-    public GameObject previousHouse;
+    public GameObject previousHouse; // previous house so that the correct address doesn't get changed while the package is flying
     // array of all addresses
     public string[] addresses = System.IO.File.ReadAllLines(@"Assets/Addresses.txt");
-    public string addrName;
-    public GameObject house;
+    public string addrName; // name of randomly selected address
+    public GameObject house; // game object that has that name
     // getting values for cannon rotation speed and distance
-    public float distance;
-    public float rotationSpeed;
+    public float distance; // distance to house
+    public float rotationSpeed; // rotation speed of the cannon
     
     // package firing
-    public GameObject package;
-    public float packageSpeed;
+    public GameObject package; // package prefab
+    public float packageSpeed; // speed that package is fired out of cannon
 
     
     void Start()
@@ -46,9 +46,9 @@ public class PostalCannon : MonoBehaviour
             // stating the previous house so that the package knows if it hit the right house
             previousHouse = house;
             // finding house when space pressed (when package fires), doing same thing as when Start() is called
-            int addrNum = Random.Range(0, addresses.Length);
-            addrName = addresses[addrNum];
-            house = GameObject.Find(addrName);
+            int addrNum = Random.Range(0, addresses.Length); // choosing random address
+            addrName = addresses[addrNum]; // tying that address to a string
+            house = GameObject.Find(addrName); // tying that string to a game object
             // firing package
             SpawnPackage();
         }
@@ -78,7 +78,7 @@ public class PostalCannon : MonoBehaviour
     }
 
     void SpawnPackage(){
-        GameObject newPackage = Instantiate(package, transform.position, Quaternion.identity);
-        newPackage.GetComponent<Rigidbody>().velocity = -(transform.up) * packageSpeed;
+        GameObject newPackage = Instantiate(package, transform.position, Quaternion.identity); // creating the package
+        newPackage.GetComponent<Rigidbody>().velocity = -(transform.up) * packageSpeed; // adding velocity to the new package
     }
 }

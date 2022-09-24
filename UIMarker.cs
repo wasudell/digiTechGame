@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class UIMarker : MonoBehaviour
 {
-    public CarController van;
-    public float yRotation;
-    private Vector3 eulerRotation;
-    private Quaternion rotation;
+    public CarController van; // script with rotation of van
+    public float yRotation; // y rotation of the van
+    private Vector3 eulerRotation; // converting that rotation to a value in degrees
+    private Quaternion rotation; // rotation to set the rotation of the marker to
 
     // Update is called once per frame
     void Update()
@@ -18,6 +18,7 @@ public class UIMarker : MonoBehaviour
         eulerRotation = new Vector3(0, 0, -yRotation);
         // converting euler angles into quaternion
         rotation.eulerAngles = eulerRotation;
+        // setting the rotation to that quaternion
         transform.rotation = rotation;
     }
 }

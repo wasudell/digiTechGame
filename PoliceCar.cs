@@ -20,6 +20,8 @@ public class PoliceCar : MonoBehaviour
     public WheelCollider BLWheelCollider;
     public WheelCollider BRWheelCollider;
 
+    // everything here is the same as the normal car in the game, but just the essentials required to get the car to drive
+
     void Start()
     {
         comAdjust = new Vector3(0, -0.6f, 0);
@@ -67,7 +69,7 @@ public class PoliceCar : MonoBehaviour
     }
 
     
-    IEnumerator Driving()
+    IEnumerator Driving() // timer that sets out the animation for the car to do in the background and then repeats the animation
     {
         transform.position = new Vector3(136, 0.1f, 235);
         transform.rotation = Quaternion.Euler(0, 180, 0);

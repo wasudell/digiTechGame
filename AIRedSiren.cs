@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class AIRedSiren : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public Material redLightOff;
-    public Material redLightOn;
+    public Material redLightOff; // material for when red light is off
+    public Material redLightOn; // material for when red light is on
 
     void Start()
     {
         StartCoroutine(redSiren());
     }
 
-    IEnumerator redSiren(){
+    IEnumerator redSiren(){ // timer that sets material to red light on, waits a second, turns material to red light off, wait a second, then repeat
         GetComponent<Renderer>().material = redLightOff;
         yield return new WaitForSeconds(1);
         GetComponent<Renderer>().material = redLightOn;

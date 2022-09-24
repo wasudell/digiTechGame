@@ -5,20 +5,18 @@ using UnityEngine.UI;
 
 public class UIMinimap : MonoBehaviour
 {
-    public CarController van;
-    public Image minimap;
+    public CarController van; // script with position of van
+    public Image minimap; // image that has minimap on it to move around
 
-    private float xOffset;
-    private float yOffset;
-    public float scale;
-    private float yMovement;
-    private float xMovement;
-    public float testX;
-    public float testY;
+    private float xOffset; // offset from global centre on the x axis
+    private float yOffset; // same but on the y axis
+    public float scale; // scale between minimap image and actual terrain
+    private float yMovement; // movement that the image has to move on the y axis
+    private float xMovement; // same but on the x axis
 
     void Start()
     {
-        // getting offset which changes with screen size
+        // getting offset; which changes with screen size
         xOffset = transform.position.x;
         yOffset = transform.position.y;
     }

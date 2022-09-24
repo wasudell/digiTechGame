@@ -8,9 +8,9 @@ public class UIScore : MonoBehaviour
 {
     // declaring text box that needs changing
     public Text txt;
-    public int score = 0;
-    private bool scoreIncrease = true;
-    public int highScore;
+    public int score = 0; // score to be displayed
+    private bool scoreIncrease = true; // whether the score needs to be increased
+    public int highScore; // player's high score
     // getting health from van
     public CarController van;
     // getting UI to destroy
@@ -80,8 +80,8 @@ public class UIScore : MonoBehaviour
         // updating the text box every frame to the correct score
         txt.text = "Score: " + score;
 
-        // destroying the UI
-        if (van.endScreen == true){
+        if (van.endScreen == true){ // once the end screen has been activated by van
+            // destroying the UI
             Destroy(Address);
             Destroy(nextAddress);
             Destroy(distance);
