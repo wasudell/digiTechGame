@@ -17,10 +17,10 @@ public class AIController : MonoBehaviour
     public Vector3 comAdjust; // adjustment to the centre of mass
 
     // transforms, rigidbodies and audio
-    public Rigidbody aiCarRB;
-    public Transform playerCar;
-    public Transform aiCar;
-    public Transform wholeAiCar;
+    public Rigidbody aiCarRB; // Rigidbody of the ai Car
+    public Transform playerCar; // Transform of the player car body (position and stuff)
+    public Transform aiCar; // Transform of the aiCar body (position and stuff)
+    public Transform wholeAiCar; // Transform of the whole Ai Car group
     private AudioSource sound; // thing on the car that produces the sound (speaker) which is picked up by
     // an audio listener (microphone) on the camera
     private AudioSource collisionSound; // getting audio source on body to produce the collision sound
