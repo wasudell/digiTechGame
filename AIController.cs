@@ -327,7 +327,7 @@ public class AIController : MonoBehaviour
     }
     private void Steering()
     {
-        // steering when sterring designated
+        // steering when steering designated
         steeringAngle = maxSteeringAngle * turnFactor;
         FRWheelCollider.steerAngle = steeringAngle;
         FLWheelCollider.steerAngle = steeringAngle;
