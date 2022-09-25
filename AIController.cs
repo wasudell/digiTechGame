@@ -57,8 +57,6 @@ public class AIController : MonoBehaviour
     private float rightDistance; // distance that an obstacle is to the left at an angle
     public bool leftCornerHit; // whether or not the raycast from the left corner hit anything
     public bool rightCornerHit; // whether or not the raycast from the right corner hit anything
-    private float leftCornerDistance; // distance that an obstacle is from the left corner of the car
-    private float rightCornerDistance; // distance that an obstacle is from the right corner of the car
 
     // wheel visuals as well as wheel colliders
     public WheelCollider FRWheelCollider; // collider for front right wheel , front left wheel and so on
@@ -146,7 +144,6 @@ public class AIController : MonoBehaviour
         }
         RaycastHit leftCornerRaycast; // left corner for if the front raycast can't see an obstacle, 1/4 velocity distance as little adjustment is needed to avoid here
         if (Physics.Raycast(transform.position + new Vector3(0, 0.2f, 0), transform.TransformDirection(new Vector3(0.5f, 0, 1)), out leftCornerRaycast, Mathf.Abs(velocity / 4))){
-            leftCornerDistance = leftCornerRaycast.distance;
             leftCornerHit = true;
             Debug.DrawRay(transform.position + new Vector3(0, 0.2f, 0), transform.TransformDirection(new Vector3(0.5f, 0, 1)) * leftCornerRaycast.distance, Color.red);
         }
@@ -155,7 +152,6 @@ public class AIController : MonoBehaviour
         }
         RaycastHit rightCornerRaycast; // same as left corner but now for the right corner
         if (Physics.Raycast(transform.position + new Vector3(0, 0.2f, 0), transform.TransformDirection(new Vector3(-0.5f, 0, 1)), out rightCornerRaycast, Mathf.Abs(velocity / 4))){
-            rightCornerDistance = rightCornerRaycast.distance;
             rightCornerHit = true;
             Debug.DrawRay(transform.position + new Vector3(0, 0.2f, 0), transform.TransformDirection(new Vector3(-0.5f, 0, 1)) * leftCornerRaycast.distance, Color.red);
         }
